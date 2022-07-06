@@ -10,6 +10,7 @@
  * @param author 作者仓库等信息  例：`本通知 By：https://github.com/whyour/qinglong`
  */
 
+const { getEnv  } = require("./getEnv");
 const querystring = require('querystring');
 const $ = new Env();
 const timeout = 15000; //超时时间(单位毫秒)
@@ -134,9 +135,10 @@ if (process.env.BARK_PUSH) {
 }
 if (process.env.TG_BOT_TOKEN) {
   TG_BOT_TOKEN = process.env.TG_BOT_TOKEN;
+  TG_BOT_TOKEN = getEnv("TG_BOT_TOKEN");
 }
 if (process.env.TG_USER_ID) {
-  TG_USER_ID = process.env.TG_USER_ID;
+  TG_USER_ID = getEnv("TG_USER_ID")
 }
 if (process.env.TG_PROXY_AUTH) TG_PROXY_AUTH = process.env.TG_PROXY_AUTH;
 if (process.env.TG_PROXY_HOST) TG_PROXY_HOST = process.env.TG_PROXY_HOST;
