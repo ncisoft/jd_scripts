@@ -11,10 +11,49 @@
 此文件为Node.js专用。其他用户请忽略
  */
 //此处填写京东账号cookie。
+const { readFileSync, existsSync } = require("fs")
+
+function getEnv(name) {
+    if (!name) return null;
+
+    const envFile = "/ql/scripts/env.json"
+    if (!existsSync(envFile)) {
+      console.log('读取配置文件失败!!!:', envFile);
+      return null;
+    }
+
+    try {
+        const env = JSON.parse(readFileSync(envFile, 'utf-8'))
+        let val = env[name] || env[name.toLowerCase()] || env[name.toUpperCase()];
+        if (val) val = val.trim()
+        console.log(`读取配置文件成功: ${envFile}`)
+        return val;
+    } catch (error) {
+        console.log('读取配置文件失败:', error)
+        return null;
+    }
+
+    const fromEnv = process.env[name] || process.env[name.toLowerCase()] || process.env[name.toUpperCase()]
+    if (fromEnv) return fromEnv.trim();
+
+}
+const jdCookie = getEnv('JD_COOKIE')
+
 let CookieJDs = [
 ]
+if (jdCookie) {
+  if (jdCookie.indexOf('&') > -1) {
+    console.log(`您的cookie选择的是用&隔开\n`)
+    CookieJDs = CookieJDs.concat(jdCookie.split('&'));
+  } else if (jdCookie.indexOf('\n') > -1) {
+    console.log(`您的cookie选择的是用换行隔开\n`)
+    CookieJDs = CookieJDs.concat(jdCookie.split('\n'));
+  } else {
+    CookieJDs.push(jdCookie)
+  }
+}
 // 判断环境变量里面是否有京东ck
-if (process.env.JD_COOKIE) {
+if (false && process.env.JD_COOKIE) {
   if (process.env.JD_COOKIE.indexOf('&') > -1) {
     CookieJDs = process.env.JD_COOKIE.split('&');
   } else if (process.env.JD_COOKIE.indexOf('\n') > -1) {
