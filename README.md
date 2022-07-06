@@ -28,6 +28,8 @@
 ##### 拉库：
 ql repo https://github.com/ncisoft/jd_scripts.git "jd_|jx_|getJDCookie" "activity|backUp" "^jd[^_]|USER|utils|jdCookie.js|sendNotify.js|getEnv.js"
 
+repo <repourl> <path> <blacklist> <dependence> <branch>   # 更新单个仓库的脚本
+
 ## 无法更新到最新一次提交的任务，删除图中文件重新拉库
 ![image](https://raw.githubusercontent.com/yuannian1112/code/main/2.png)
 
